@@ -1,0 +1,43 @@
+# Runs on every push to main and on every pull request. On GitHub, pull requests are
+# proposals; this tells their author whether the checks and the acceptance tests pass.
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  check:
+    # Formatting, Clippy and cargo-deny, as work/bin/check runs them.
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-deny
+      - run: work/bin/check
+
+  verify:
+    # The acceptance tests in shape/, run against the static binary work/bin/build makes.
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-unknown-linux-musl
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ruby
+      - name: Minitest
+        run: ruby -e 'require "minitest"' 2> /dev/null || gem install minitest
+      - name: Fetch the dependencies, since work/bin/build builds offline
+        working-directory: work
+        run: cargo fetch --locked
+      - run: work/bin/verify --all

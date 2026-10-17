@@ -1,0 +1,3 @@
+name: Import workshops from the studio calendar
+description: Import workshops from the studio calendar
+try: In a console, run ImportWorkshops.call and compare with the studio calendar.

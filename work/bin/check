@@ -1,0 +1,24 @@
+#!/bin/sh
+# sanity rust @ rust-v0.1.0
+# The whole check: formatting, lints, dependency policy. Exit 0 means the tree is
+# clean. CI runs this script and bin/verify --all; see .github/workflows/ci.yml at the
+# repository root.
+set -eu
+cd "$(dirname "$0")/.."
+
+if ! cargo deny --version >/dev/null 2>&1; then
+    echo "bin/check needs cargo-deny and it is not installed." >&2
+    echo "Install it with: cargo install --locked cargo-deny" >&2
+    exit 2
+fi
+
+run() {
+    echo "==> $*"
+    "$@"
+}
+
+run cargo fmt --all --check
+run cargo clippy --workspace --all-targets --locked -- -D warnings
+run cargo deny --workspace check
+# No cargo test: roosty's tests are Minitest in ../shape, run through bin/verify and owned by the shape agent.
+echo "==> clean"

@@ -1,0 +1,13 @@
+#!/bin/sh
+set -eu
+
+cd "$(dirname "$0")/.."
+host=$(rustc -vV | sed -n 's/^host: //p')
+case "$host" in
+    *-unknown-linux-gnu) target="${host%-gnu}-musl" ;;
+    *-unknown-linux-musl) target="$host" ;;
+    *) echo "bin/build requires a Linux Rust toolchain with the musl target installed" >&2; exit 1 ;;
+esac
+
+cargo build --offline --locked --release --target "$target"
+cp "${CARGO_TARGET_DIR:-target}/$target/release/roosty" bin/roosty

@@ -1,0 +1,18 @@
+CHANGES SINCE 2026-10-03
+
+ENTRYPOINTS
+  + http POST /waiting_list
+  + job WaitingListJob
+  - http GET /bookings/:id
+
+PROCESSES
+  book-workshop
+    Offer a freed place to the next person waiting
+    Add the waiting list
+  cancel-booking
+    Offer a freed place to the next person waiting
+    Add the waiting list
+  remind-attendees
+    Send the reminder two days ahead
+
+entrypoints: 2 added, 1 removed   processes: 3 changed

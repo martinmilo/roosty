@@ -1,0 +1,5 @@
++ http POST /waiting_list
++ job WaitingListJob
+- mail BookingMailer#reminder
+
+8 entrypoints, 2 added, 1 removed

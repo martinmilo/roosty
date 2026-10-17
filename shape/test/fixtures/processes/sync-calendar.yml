@@ -1,0 +1,3 @@
+name: Sync the studio calendar
+group: Imports
+description: Imports the studio calendar every night and creates or updates workshops, trainers and rooms so that the booking pages are never out of date.

@@ -1,0 +1,5 @@
+name: Atelier
+operations:
+  deploy:
+    command: bin/kamal deploy
+    note: asks for the production vault password, which is in the shared password manager under Atelier, and takes about four minutes

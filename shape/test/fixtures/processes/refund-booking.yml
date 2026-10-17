@@ -1,0 +1,7 @@
+name: Refund a booking
+group: Bookings
+description: Refund a cancelled booking to the original card
+entrypoints:
+  - http POST /refunds
+files:
+  - app/models/booking.rb

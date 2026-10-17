@@ -1,0 +1,16 @@
+name: Atelier
+stack: Rails 8, PostgreSQL, Solid Queue
+description: Sells places on a pottery studio's workshops and reminds the people who booked.
+watch_out:
+  - Stripe runs in test mode on staging; never use a real card there.
+operations:
+  start: bin/dev
+  test:
+    command: bin/rails test
+    note: asks for the production vault password, which is in the shared password manager under Atelier; a deploy costs about 4,50 € of CI minutes and takes a café's wait
+  deploy:
+    command: bin/kamal deploy
+    note: asks for the production vault password
+environments:
+  staging: staging.atelier.example (Hetzner)
+  production: atelier.example (Hetzner)

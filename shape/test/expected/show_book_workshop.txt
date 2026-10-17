@@ -1,0 +1,24 @@
+book-workshop   Book a place on a workshop                              Bookings
+Reserve a place, take payment and confirm by email.
+
+  entry    http POST /bookings
+           app/controllers/bookings_controller.rb
+  entry    mail BookingMailer#confirmation
+           app/mailers/booking_mailer.rb
+  code     app/models/booking.rb           holds the state machine
+           app/services/book_workshop.rb
+  try      Open /workshops and pick a date with free places.
+           Book with card 4242 4242 4242 4242 and any future expiry.
+           Check the confirmation mail in /letter_opener.
+
+OUTCOMES
+  confirmed   payment succeeds: the booking is saved, the place count goes down
+              and the confirmation mail is sent
+  full        no places left: booking refused, nothing saved
+
+WHY
+  Payment is taken before the place is held so that abandoned checkouts never
+  block a seat.
+
+  Confirmation goes by mail rather than SMS because most bookings come from the
+  studio's newsletter.

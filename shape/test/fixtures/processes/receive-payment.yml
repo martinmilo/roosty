@@ -1,0 +1,7 @@
+name: Receive a payment notification
+group: Bookings
+description: Mark a booking paid when the payment provider confirms the charge
+entrypoints:
+  - webhook stripe.payment_intent.succeeded
+files:
+  - app/models/booking.rb

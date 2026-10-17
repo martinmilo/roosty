@@ -1,0 +1,3 @@
+name: Atelier
+watch_out:
+  - Refunds go back to the card that paid, never to a voucher, because the studio has no way of tracking voucher balances once a booking has been cancelled or moved.

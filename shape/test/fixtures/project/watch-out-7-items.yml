@@ -1,0 +1,9 @@
+name: Atelier
+watch_out:
+  - Stripe runs in test mode on staging; never use a real card there.
+  - The reminder job runs at 18:00 in the studio's time zone, not UTC.
+  - Workshop dates are stored as dates; the start time lives on the workshop template.
+  - Deleting a workshop with bookings is refused; cancel the bookings first.
+  - The waiting list is first come, first served and is not shown to attendees.
+  - Mail previews only work with letter_opener in development.
+  - The Hetzner firewall blocks SMTP from staging; mails there are logged, not sent.

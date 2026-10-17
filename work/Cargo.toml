@@ -1,0 +1,50 @@
+[package]
+name = "roosty"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+publish = false
+
+[dependencies]
+chrono = { version = "0.4.42", default-features = false, features = ["clock"] }
+saphyr = { version = "0.1.0", default-features = false }
+unicode-width = { version = "0.2.2", default-features = false }
+
+# sanity rust @ rust-v0.1.0
+# The baseline's lint tables in single-crate form. What to do when one of them fires is in
+# .claude/skills/rust-sanity/GUIDE.md.
+[lints.rust]
+unsafe_code = "forbid"
+unused_must_use = "deny"
+unreachable_pub = "warn"
+rust_2018_idioms = { level = "warn", priority = -1 }
+
+[lints.clippy]
+all = { level = "warn", priority = -1 }
+# failure handling
+unwrap_used = "warn"
+let_underscore_must_use = "warn"
+missing_errors_doc = "warn"
+missing_panics_doc = "warn"
+# numeric boundaries
+cast_possible_truncation = "warn"
+cast_sign_loss = "warn"
+cast_possible_wrap = "warn"
+cast_lossless = "warn"
+# API hygiene
+return_self_not_must_use = "warn"
+unused_async = "warn"
+undocumented_unsafe_blocks = "warn"
+# suppressions
+allow_attributes_without_reason = "warn"
+# leftovers that must not reach a commit
+dbg_macro = "warn"
+todo = "warn"
+print_stdout = "warn"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true                        # removes debug info, so the baseline's debug = "line-tables-only" is left out
+overflow-checks = true
+panic = "abort"

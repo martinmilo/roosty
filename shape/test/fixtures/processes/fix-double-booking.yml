@@ -1,0 +1,10 @@
+name: Fix a double booking
+group: Bookings
+description: Move one of two attendees booked on the same place to another date.
+files:
+  - app/models/booking.rb
+try: |
+  In a Rails console:
+    booking = Booking.find_by(reference: "AT-2041")
+    booking.move_to!(Workshop.find(17))   # frees the double-booked place
+  Then check on /workshops that the number of free places for that date went up by one.

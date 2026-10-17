@@ -1,0 +1,7 @@
+name: Export bookings
+group: Reports
+description: Export the month's bookings as a spreadsheet for the accountant
+entrypoints:
+  - http GET /bookings/:id
+files:
+  - app/services/export_bookings.rb
